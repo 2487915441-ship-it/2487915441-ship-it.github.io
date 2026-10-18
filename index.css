@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 1.2%;
+    --foreground: 36 60% 90%;
+    --card: 0 0% 3%;
+    --card-foreground: 36 60% 90%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 36 60% 90%;
+    --primary: 43 72% 52%;
+    --primary-foreground: 0 0% 1.2%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 36 60% 90%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 36 20% 60%;
+    --accent: 0 100% 27%;
+    --accent-foreground: 36 60% 90%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 43 72% 52%;
+    --radius: 0.5rem;
+    /* 全站统一奢侈品缓动（快速启动、长减速） */
+    --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* 选中文本匹配品牌铜色 */
+  ::selection {
+    background: rgba(212, 175, 55, 0.85);
+    color: #030303;
+  }
+
+  /* 键盘焦点可见性 */
+  :focus-visible {
+    outline: 1px solid rgba(212, 175, 55, 0.7);
+    outline-offset: 3px;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-[#030303] text-[#F5E6D3] antialiased;
+    font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+  }
+
+  .font-ui {
+    font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
+  }
+
+  .font-accent {
+    font-family: 'Cormorant Garamond', 'Georgia', serif;
+  }
+
+  .text-bone {
+    color: #F5E6D3;
+  }
+
+  .text-bronze {
+    color: #D4AF37;
+  }
+
+  .text-cinnabar {
+    color: #8B0000;
+  }
+
+  .bg-obsidian {
+    background-color: #030303;
+  }
+
+  .nav-link {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #D4AF37, #f4f4f4);
+    transform: translateX(-101%);
+    transition: transform 0.6s var(--ease-luxury);
+  }
+
+  .nav-link:hover::after {
+    transform: translateX(0);
+  }
+
+  /* 下划线扫入（产品名、文内链接） */
+  .link-sweep {
+    position: relative;
+  }
+
+  .link-sweep::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: #D4AF37;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s var(--ease-luxury);
+  }
+
+  .group:hover .link-sweep::after,
+  .link-sweep:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* 移动菜单条目依次入场 */
+  @keyframes menu-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .menu-item {
+    animation: menu-item-in 0.55s var(--ease-luxury) both;
+  }
+
+  /* 减少动态偏好：逐字标题与入场直接呈现 */
+  @media (prefers-reduced-motion: reduce) {
+    .split-char > span {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+    .reveal-base {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+    .menu-item {
+      animation: none;
+    }
+  }
+}
+
+@layer utilities {
+  .animation-paused {
+    animation-play-state: paused;
+  }
+}

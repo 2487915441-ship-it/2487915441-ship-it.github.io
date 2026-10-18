@@ -17,7 +17,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: rm -f package-lock.json && npm install
+      - run: rm -f package-lock.json && npm install --legacy-peer-deps
+      - name: show-error
+        if: failure()
+        run: |
+          LOG=$(ls -t /home/runner/.npm/_logs/*.log 2>/dev/null | head -1)
+          tail -n 80 "$LOG" | grep -E "npm error|ERR!|error code" | head -30 | while IFS= read -r line; do echo "::error::${line:0:250}"; done
       - run: npx vite build
       - uses: actions/upload-pages-artifact@v3
         with:
